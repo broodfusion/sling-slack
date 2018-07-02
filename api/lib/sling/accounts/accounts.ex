@@ -51,7 +51,7 @@ defmodule Sling.Accounts do
   """
   def create_user(attrs \\ %{}) do
     %User{}
-    |> User.changeset(attrs)
+    |> User.registration_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -100,5 +100,20 @@ defmodule Sling.Accounts do
   """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  def get_user_by_username_and_password(nil, password), do: {:error, :invalid}
+  def get_user_by_username_and_password(username, nil), do: {:error, :invalid}
+
+  def get_user_by_username_and_password(username, password) do
+    with %User{} = user <- Repo.get_by(User, username: String.downcase(username)),
+         true <- Comeonin.Argon2.checkpw(password, user.password_hash) do
+      {:ok, user}
+    else
+      _ ->
+        # Help to mitigate timing attacks
+        Comeonin.Argon2.dummy_checkpw()
+        {:error, :unauthorized}
+    end
   end
 end

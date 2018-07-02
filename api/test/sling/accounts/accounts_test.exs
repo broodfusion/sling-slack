@@ -6,8 +6,16 @@ defmodule Sling.AccountsTest do
   describe "users" do
     alias Sling.Accounts.User
 
-    @valid_attrs %{email: "some email", password_hash: "some password_hash", username: "some username"}
-    @update_attrs %{email: "some updated email", password_hash: "some updated password_hash", username: "some updated username"}
+    @valid_attrs %{
+      email: "some email hello",
+      password_hash: "some password_hash",
+      username: "some username"
+    }
+    @update_attrs %{
+      email: "some updated email",
+      password_hash: "some updated password_hash",
+      username: "some updated username"
+    }
     @invalid_attrs %{email: nil, password_hash: nil, username: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -31,7 +39,7 @@ defmodule Sling.AccountsTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.email == "some email"
+      assert user.email == "some email hello"
       assert user.password_hash == "some password_hash"
       assert user.username == "some username"
     end

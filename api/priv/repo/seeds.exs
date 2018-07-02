@@ -9,3 +9,27 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+{:ok, _user} =
+  Sling.Accounts.create_user(%{
+    username: "writer",
+    password: "qweqweqwe",
+    email: "writer@gmail.com",
+    permissions: %{default: [:read_users, :write_users]}
+  })
+
+{:ok, _user} =
+  Sling.Accounts.create_user(%{
+    username: "reader",
+    password: "qweqweqwe",
+    email: "reader@gmail.com",
+    permissions: %{default: [:read_users]}
+  })
+
+{:ok, _user} =
+  Sling.Accounts.create_user(%{
+    username: "rubbish",
+    password: "qweqweqwe",
+    email: "rubbish@gmail.com",
+    permissions: %{default: []}
+  })

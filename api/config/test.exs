@@ -12,8 +12,12 @@ config :logger, level: :warn
 # Configure your database
 config :sling, Sling.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "sliang",
+  password: "",
   database: "sling_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :argon2_elixir,
+  t_cost: 1,
+  m_cost: 8

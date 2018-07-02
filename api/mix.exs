@@ -20,7 +20,7 @@ defmodule Sling.Mixfile do
   def application do
     [
       mod: {Sling.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_identity]
     ]
   end
 
@@ -40,7 +40,10 @@ defmodule Sling.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.0"},
-      {:argon2_elixir, "~> 1.2"}
+      {:argon2_elixir, "~> 1.2"},
+      {:guardian, "~> 1.0"},
+      {:ueberauth, "~> 0.5.0"},
+      {:ueberauth_identity, "~> 0.2.3"}
     ]
   end
 
