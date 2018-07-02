@@ -1,4 +1,4 @@
-defmodule Sling.Repo.Migrations.CreateUsers do
+defmodule Sling.Repo.Migrations.AddPermissionColumn do
   use Ecto.Migration
 
   def change do

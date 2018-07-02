@@ -28,4 +28,9 @@ defmodule SlingWeb.AuthController do
         |> json(%{message: "user not found"})
     end
   end
+
+  def delete(conn, _) do
+    jwt = Guardian.Plug.current_token(conn)
+    Guardian.revoke!(jwt)
+  end
 end

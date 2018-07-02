@@ -32,7 +32,6 @@ config :ueberauth, Ueberauth,
        [
          callback_methods: ["POST"],
          nickname_field: :username,
-         param_nesting: "user",
          uid_field: :username
        ]}
   ]

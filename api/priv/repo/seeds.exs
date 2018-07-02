@@ -13,7 +13,7 @@
 {:ok, _user} =
   Sling.Accounts.create_user(%{
     username: "writer",
-    password: "qweqweqwe",
+    password: "hello123",
     email: "writer@gmail.com",
     permissions: %{default: [:read_users, :write_users]}
   })
@@ -21,7 +21,7 @@
 {:ok, _user} =
   Sling.Accounts.create_user(%{
     username: "reader",
-    password: "qweqweqwe",
+    password: "hello123",
     email: "reader@gmail.com",
     permissions: %{default: [:read_users]}
   })
@@ -29,7 +29,7 @@
 {:ok, _user} =
   Sling.Accounts.create_user(%{
     username: "rubbish",
-    password: "qweqweqwe",
+    password: "hello123",
     email: "rubbish@gmail.com",
     permissions: %{default: []}
   })
