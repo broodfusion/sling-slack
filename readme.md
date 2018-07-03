@@ -2,7 +2,7 @@
 
 Sling-Slack is a Slack clone made with React/Redux as the frontend and Elixir/Phoenix as the backend API
 
-#### Installation
+# Installation
 
 First, clone the repository
 ```sh
