@@ -19,7 +19,7 @@ export function login(data) {
 }
 
 export function signup(data) {
-  return dispatch => api.post('/users', data).then((response) => {
+  return dispatch => axios.post(`${ROOT_URL}/users`, data).then((response) => {
     setCurrentUser(dispatch, response);
     dispatch(reset('signup'));
   });

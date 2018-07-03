@@ -8,7 +8,7 @@ import SignupForm from '../../components/SignupForm';
 
 class Signup extends Component {
   handleSignup = (data) => {
-    signup(data);
+    this.props.signup(data);
   };
 
   render() {
