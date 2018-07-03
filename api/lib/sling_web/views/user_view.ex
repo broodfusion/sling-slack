@@ -18,4 +18,8 @@ defmodule SlingWeb.UserView do
       permissions: user.permissions
     }
   end
+
+  def render("jwt.json", %{token: jwt}) do
+    %{token: jwt}
+  end
 end

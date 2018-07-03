@@ -16,7 +16,7 @@ defmodule Sling.Accounts.User do
   def changeset(user, attrs \\ %{}) do
     user
     |> cast(attrs, [:username, :email, :password, :permissions])
-    |> validate_required([:username, :email, :password, :permissions])
+    |> validate_required([:username, :email, :password])
     |> unique_constraint(:username)
     |> unique_constraint(:email)
   end

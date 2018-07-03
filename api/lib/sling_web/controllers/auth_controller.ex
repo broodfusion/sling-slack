@@ -2,8 +2,19 @@ defmodule SlingWeb.AuthController do
   use SlingWeb, :controller
 
   alias Sling.Accounts
+  alias Sling.Accounts.User
+  alias Sling.Guardian
 
   plug(Ueberauth)
+  action_fallback(SlingWeb.FallbackController)
+
+  def create(conn, user_params) do
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params),
+         {:ok, jwt, _claims} <- Guardian.encode_and_sign(user, %{}) do
+      conn
+      |> render("jwt.json", token: jwt)
+    end
+  end
 
   def identity_callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     username = auth.uid
@@ -15,17 +26,21 @@ defmodule SlingWeb.AuthController do
     case user do
       {:ok, user} ->
         {:ok, jwt, _full_claims} =
-          Sling.Guardian.encode_and_sign(user, %{}, permissions: user.permissions)
+          Guardian.encode_and_sign(user, %{}, permissions: user.permissions)
 
         conn
         |> put_resp_header("authorization", "Bearer #{jwt}")
-        |> json(%{token: jwt})
+        |> render("jwt.json", token: jwt)
+
+      # |> json(%{token: jwt})
 
       # Handle our own error to keep it generic
-      {:error, _reason} ->
-        conn
-        |> put_status(401)
-        |> json(%{message: "user not found"})
+      _ ->
+        {:error, :unauthorized}
+        # {:error, _reason} ->
+        #   conn
+        #   |> put_status(401)
+        #   |> json(%{message: "user not found"})
     end
   end
 

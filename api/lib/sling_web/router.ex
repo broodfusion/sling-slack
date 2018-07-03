@@ -14,10 +14,16 @@ defmodule SlingWeb.Router do
 
     scope "/auth" do
       post("/identity/callback", AuthController, :identity_callback)
+      post("/signup", AuthController, :create)
     end
 
-    pipe_through(:authenticated)
+    # pipe_through(:authenticated)
+    # post("/signin", UserController, :sign_in)
+  end
 
-    resources("/users", UserController, except: [:new, :edit])
+  scope "/api", SlingWeb do
+    pipe_through([:api, :authenticated])
+
+    get("/myuser", UserController, :show)
   end
 end
