@@ -13,6 +13,11 @@ defmodule SlingWeb.AuthController do
          {:ok, jwt, _claims} <- Guardian.encode_and_sign(user, %{}) do
       conn
       |> render("jwt.json", token: jwt)
+    else
+      {:error, _changeset} ->
+        {:error, :unprocessable_entity}
+        # conn
+        # |> render("error.json", error: error)
     end
   end
 
@@ -46,6 +51,6 @@ defmodule SlingWeb.AuthController do
 
   def delete(conn, _) do
     jwt = Guardian.Plug.current_token(conn)
-    Guardian.revoke!(jwt)
+    Guardian.revoke(jwt)
   end
 end

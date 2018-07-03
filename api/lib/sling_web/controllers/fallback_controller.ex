@@ -23,4 +23,12 @@ defmodule SlingWeb.FallbackController do
     |> put_status(:unauthorized)
     |> json(%{error: "Login error!"})
   end
+
+  def call(conn, {:error, :unprocessable_entity}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render(SlingWeb.AuthView, "error.json", error: "Username or email already taken!")
+
+    # |> json(%{error: "Username or email already taken!"})
+  end
 end

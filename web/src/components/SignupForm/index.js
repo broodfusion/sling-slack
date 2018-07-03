@@ -18,7 +18,7 @@ class SignupForm extends Component {
   handleSubmit = data => this.props.onSubmit(data);
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, errorMessage } = this.props;
 
     return (
       <form className={`card ${css(styles.card)}`} onSubmit={handleSubmit(this.handleSubmit)}>
@@ -46,6 +46,9 @@ Create an account
           placeholder="Password"
           className="form-control"
         />
+        <div>
+          {errorMessage}
+        </div>
         <button type="submit" disabled={submitting} className="btn btn-block btn-primary">
           {submitting ? 'Submitting...' : 'Sign up'}
         </button>
@@ -82,5 +85,6 @@ export default reduxForm({
 SignupForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired
 };
