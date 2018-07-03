@@ -5,7 +5,7 @@ Sling-Slack is a Slack clone made with React/Redux as the frontend and Elixir/Ph
 # Prerequisite
 - This project assumes you have at least Elixir v1.6 (Erlang/OTP20) and Phoenix v1.3
 - This project assumes you have Postgres installed at least locally
-- This project obviously does not include db connection details and assumes you can create your own dev.config.exs file.
+- This project obviously does not include db connection details and assumes you can create your own dev.secret.exs file.
 
 # Installation
 
