@@ -1,13 +1,14 @@
 import axios from 'axios';
-import api from '../api';
+import { fetchUserRooms } from './rooms';
 import { AUTH_ERROR, AUTH_USER } from './type';
 
 // const ROOT_URL = 'http://localhost:4000/api';
 const API = process.env.REACT_APP_API_URL;
 
 function setCurrentUser(response, dispatch) {
+  localStorage.setItem('token', response.data.token);
   dispatch({ type: AUTH_USER, payload: response.data.token });
-  localStorage.setItem('token', JSON.stringify(response.data.token));
+  dispatch(fetchUserRooms(response.data.id));
 }
 
 export const login = (formProps, callback) => async dispatch => {
@@ -33,16 +34,18 @@ export const signup = (formProps, callback) => async dispatch => {
   }
 };
 
-// export const logout = () => async dispatch => {
-//   try {
-//     await axios.delete
-//   }
-// }
+export const signout = () => {
+  localStorage.removeItem('token');
+  return {
+    type: AUTH_USER,
+    payload: ''
+  };
+};
 
-export function logout() {
-  return dispatch =>
-    api.delete('/sessions').then(() => {
-      localStorage.removeItem('token');
-      dispatch({ type: 'LOGOUT' });
-    });
-}
+// export function logout() {
+//   return dispatch =>
+//     api.delete('/sessions').then(() => {
+//       localStorage.removeItem('token');
+//       dispatch({ type: 'LOGOUT' });
+//     });
+// }

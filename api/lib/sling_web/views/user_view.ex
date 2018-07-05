@@ -19,7 +19,7 @@ defmodule SlingWeb.UserView do
     }
   end
 
-  def render("jwt.json", %{token: jwt}) do
-    %{token: jwt}
+  def render("jwt.json", %{token: jwt}, %{user: user}) do
+    %{token: jwt, id: user.id}
   end
 end

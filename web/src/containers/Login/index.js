@@ -9,7 +9,7 @@ import Navbar from '../../components/Navbar';
 class Login extends Component {
   handleLogin = data =>
     this.props.login(data, () => {
-      this.props.history.push('/feature');
+      this.props.history.push('/home');
     });
 
   render() {

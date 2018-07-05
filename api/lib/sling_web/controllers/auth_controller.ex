@@ -12,7 +12,7 @@ defmodule SlingWeb.AuthController do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params),
          {:ok, jwt, _claims} <- Guardian.encode_and_sign(user, %{}) do
       conn
-      |> render("jwt.json", token: jwt)
+      |> render("jwt.json", token: jwt, user: user)
     else
       {:error, _changeset} ->
         {:error, :unprocessable_entity}
@@ -35,7 +35,7 @@ defmodule SlingWeb.AuthController do
 
         conn
         |> put_resp_header("authorization", "Bearer #{jwt}")
-        |> render("jwt.json", token: jwt)
+        |> render("jwt.json", token: jwt, user: user)
 
       # |> json(%{token: jwt})
 

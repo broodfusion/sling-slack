@@ -7,9 +7,9 @@ import Navbar from '../../components/Navbar';
 import SignupForm from '../../components/SignupForm';
 
 class Signup extends Component {
-  handleSignup = (data) => {
+  handleSignup = data => {
     this.props.signup(data, () => {
-      this.props.history.push('/feature');
+      this.props.history.push('/home');
     });
   };
 
@@ -17,7 +17,10 @@ class Signup extends Component {
     return (
       <div style={{ flex: '1' }}>
         <Navbar />
-        <SignupForm onSubmit={this.handleSignup} errorMessage={this.props.errorMessage} />
+        <SignupForm
+          onSubmit={this.handleSignup}
+          errorMessage={this.props.errorMessage}
+        />
       </div>
     );
   }
@@ -25,16 +28,16 @@ class Signup extends Component {
 
 function mapStateToProps({ auth }) {
   return {
-    errorMessage: auth.errorMessage,
+    errorMessage: auth.errorMessage
   };
 }
 
 export default connect(
   mapStateToProps,
-  { signup },
+  { signup }
 )(Signup);
 
 Signup.propTypes = {
   signup: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.string
 };
