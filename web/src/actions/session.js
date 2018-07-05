@@ -6,8 +6,8 @@ import { AUTH_ERROR, AUTH_USER } from './type';
 const API = process.env.REACT_APP_API_URL;
 
 function setCurrentUser(response, dispatch) {
-  localStorage.setItem('token', JSON.stringify(response.data.token));
   dispatch({ type: AUTH_USER, payload: response.data.token });
+  localStorage.setItem('token', JSON.stringify(response.data.token));
 }
 
 export const login = (formProps, callback) => async dispatch => {
@@ -33,11 +33,10 @@ export const signup = (formProps, callback) => async dispatch => {
   }
 };
 
-// export function signup(data) {
-//   return dispatch => axios.post(`${API}/users`, data).then((response) => {
-//     setCurrentUser(dispatch, response);
-//     dispatch(reset('signup'));
-//   });
+// export const logout = () => async dispatch => {
+//   try {
+//     await axios.delete
+//   }
 // }
 
 export function logout() {

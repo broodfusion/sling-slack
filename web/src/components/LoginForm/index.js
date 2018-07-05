@@ -18,16 +18,39 @@ class LoginForm extends Component {
   handleSubmit = data => this.props.onSubmit(data);
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, errorMessage } = this.props;
 
     return (
-      <form className={`card ${css(styles.card)}`} onSubmit={handleSubmit(this.handleSubmit)}>
+      <form
+        className={`card ${css(styles.card)}`}
+        onSubmit={handleSubmit(this.handleSubmit)}
+      >
         <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>
-Login to Sling
+          Login to Sling
         </h3>
-        <Field name="username" type="text" component={Input} placeholder="Username" />
-        <Field name="password" type="password" component={Input} placeholder="Password" />
-        <button type="submit" disabled={submitting} className="btn btn-block btn-primary">
+        <Field
+          name="username"
+          type="text"
+          component={Input}
+          placeholder="Username"
+        />
+        <Field
+          name="password"
+          type="password"
+          component={Input}
+          placeholder="Password"
+        />
+        {errorMessage ? (
+          <div className="alert alert-danger">{errorMessage}</div>
+        ) : (
+          ''
+        )}
+
+        <button
+          type="submit"
+          disabled={submitting}
+          className="btn btn-block btn-primary"
+        >
           {submitting ? 'Logging in...' : 'Login'}
         </button>
         <hr style={{ margin: '2rem 0' }} />
@@ -39,7 +62,7 @@ Login to Sling
   }
 }
 
-const validate = (values) => {
+const validate = values => {
   const errors = {};
   if (!values.email) {
     errors.email = 'Required';

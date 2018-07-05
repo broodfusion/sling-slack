@@ -3,9 +3,13 @@ defmodule SlingWeb.UserController do
 
   alias Sling.Accounts
   alias Sling.Accounts.User
-  alias Sling.Guardian
 
   action_fallback(SlingWeb.FallbackController)
+
+  plug(
+    Guardian.Plug.EnsureAuthenticated,
+    [handler: SlingWeb.AuthController] when action in [:rooms]
+  )
 
   # plug(Guardian.Permissions.Bitwise, ensure: %{default: [:read_users]})
 
@@ -15,8 +19,14 @@ defmodule SlingWeb.UserController do
   # )
 
   def show(conn, _params) do
-    user = Guardian.Plug.current_resource(conn)
+    user = Sling.Guardian.Plug.current_resource(conn)
     conn |> render("user.json", user: user)
+  end
+
+  def rooms(conn, _params) do
+    current_user = Sling.Guardian.Plug.current_resource(conn)
+    rooms = Sling.Repo.all(Ecto.assoc(current_user, :rooms))
+    render(conn, SlingWeb.RoomView, "index.json", %{rooms: rooms})
   end
 
   # def index(conn, _params) do

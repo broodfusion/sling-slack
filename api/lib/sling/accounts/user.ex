@@ -8,6 +8,7 @@ defmodule Sling.Accounts.User do
     field(:username, :string)
     field(:permissions, :map)
     field(:password, :string, virtual: true)
+    many_to_many(:rooms, Sling.Rooms.Room, join_through: "user_rooms")
 
     timestamps()
   end

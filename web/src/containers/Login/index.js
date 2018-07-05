@@ -16,14 +16,23 @@ class Login extends Component {
     return (
       <div style={{ flex: '1' }}>
         <Navbar />
-        <LoginForm onSubmit={this.handleLogin} />
+        <LoginForm
+          onSubmit={this.handleLogin}
+          errorMessage={this.props.errorMessage}
+        />
       </div>
     );
   }
 }
 
+function mapStateToProps({ auth }) {
+  return {
+    errorMessage: auth.errorMessage
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { login }
 )(Login);
 
