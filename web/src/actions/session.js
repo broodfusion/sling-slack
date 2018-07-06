@@ -7,6 +7,7 @@ const API = process.env.REACT_APP_API_URL;
 
 function setCurrentUser(response, dispatch) {
   localStorage.setItem('token', response.data.token);
+  localStorage.setItem('userID', response.data.id);
   dispatch({ type: AUTH_USER, payload: response.data.token });
   dispatch(fetchUserRooms(response.data.id));
 }
@@ -36,6 +37,7 @@ export const signup = (formProps, callback) => async dispatch => {
 
 export const signout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('userID');
   return {
     type: AUTH_USER,
     payload: ''

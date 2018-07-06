@@ -1,7 +1,10 @@
 // @flow
 import { css, StyleSheet } from 'aphrodite';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { fetchUserRooms } from '../../actions/rooms';
+import { signout } from '../../actions/session';
 
 const styles = StyleSheet.create({
   sidebar: {
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
 });
 
 const RoomLink = ({ room }) => (
-  <Link
+  <NavLink
     to={`/r/${room.id}`}
     className={css(styles.link)}
     activeClassName={css(styles.activeLink)}
@@ -67,29 +70,48 @@ const RoomLink = ({ room }) => (
     <div className={css(styles.badge)}>
       <span>{room.name.charAt(0)}</span>
     </div>
-  </Link>
+  </NavLink>
 );
-
-const Sidebar = ({ rooms }) => (
-  <div className={css(styles.sidebar)}>
-    {rooms.map(room => <RoomLink key={room.id} room={room} />)}
-    <Link
-      to="/"
-      activeOnlyWhenExact
-      className={css(styles.link)}
-      activeClassName={css(styles.activeLink)}
-    >
-      <div className={css(styles.badge)}>
-        <span className="fa fa-plus" />
+class Sidebar extends Component {
+  componentDidMount() {
+    this.props.fetchUserRooms(localStorage.getItem('userID'));
+  }
+  render() {
+    const { rooms } = this.props;
+    return (
+      <div className={css(styles.sidebar)}>
+        {rooms.map(room => <RoomLink key={room.id} room={room} />)}
+        <NavLink
+          to="/"
+          exact
+          className={css(styles.link)}
+          activeClassName={css(styles.activeLink)}
+        >
+          <div className={css(styles.badge)}>
+            <span className="fa fa-plus" />
+          </div>
+        </NavLink>
+        <div style={{ flex: '1' }} />
+        <NavLink
+          to="/signout"
+          className={css(styles.link, styles.logoutButton)}
+        >
+          <div className={css(styles.badge)}>
+            <span className="fa fa-sign-out" />
+          </div>
+        </NavLink>
       </div>
-    </Link>
-    <div style={{ flex: '1' }} />
-    <Link to="/signout" className={css(styles.link, styles.logoutButton)}>
-      <div className={css(styles.badge)}>
-        <span className="fa fa-sign-out" />
-      </div>
-    </Link>
-  </div>
-);
+    );
+  }
+}
 
-export default Sidebar;
+const mapStateToProps = ({ rooms }) => {
+  return {
+    rooms: rooms.currentUserRooms
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { signout, fetchUserRooms }
+)(Sidebar);

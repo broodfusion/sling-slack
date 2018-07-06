@@ -28,10 +28,7 @@ class App extends Component {
     return (
       <Router>
         <div style={{ display: 'flex', flex: '1' }}>
-          <Sidebar
-            rooms={this.props.currentUserRooms}
-            onLogoutClick={this.props.signout}
-          />
+          <Sidebar />
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/home" component={requireAuth(Home)} />
